@@ -30,7 +30,7 @@ Aashna Thadani
 <!-- - [Your Name](https://github.com/your-username) -->
 
 - [Urja Saha](https://github.com/sahaurja)
+- [Fiona Chandler](https://github.com/FionaChandler)
 
-Fiona Chandler
 
 
