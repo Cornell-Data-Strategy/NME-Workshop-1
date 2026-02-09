@@ -1049,6 +1049,57 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
         </div>
 
         
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Environment Files (.env)</h2>
+                <p class="subtitle">Keep secrets out of Git, keep config in one place</p>
+                <ul class="check-list">
+                    <li><i data-lucide="lock"></i> Store API keys, tokens, and passwords locally</li>
+                    <li><i data-lucide="layers"></i> Switch settings between dev, staging, and prod</li>
+                    <li><i data-lucide="shield-alert"></i> Prevent sensitive data from leaking to GitHub</li>
+                </ul>
+                <pre style="margin-top: 2rem;"><code>APP_ENV=development
+API_KEY=sk-live-********
+DATABASE_URL=postgres://user:pass@localhost:5432/app</code></pre>
+                <div class="warning-box" style="margin-top: 2rem;">
+                    <strong>Rule:</strong> Never commit real secrets. Use <span class="inline-code">.env</span> locally.
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Use .gitignore</h2>
+                <p class="subtitle">Tell Git what NOT to track</p>
+                <div class="two-col" style="align-items: flex-start;">
+                    <div class="col">
+                        <h3><i data-lucide="ban"></i> Ignore These</h3>
+                        <ul class="check-list">
+                            <li><i data-lucide="file-lock-2"></i> <span class="inline-code">.env</span> (secrets)</li>
+                            <li><i data-lucide="package"></i> <span class="inline-code">node_modules/</span> (dependencies)</li>
+                            <li><i data-lucide="file-text"></i> <span class="inline-code">*.log</span> (logs)</li>
+                            <li><i data-lucide="folder"></i> <span class="inline-code">dist/</span>, <span class="inline-code">build/</span> (outputs)</li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h3><i data-lucide="file-code-2"></i> Example</h3>
+                        <pre><code># .gitignore
+.env
+node_modules/
+dist/
+*.log
+.DS_Store
+__pycache__/</code></pre>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Best practice:</strong> Commit <span class="inline-code">.env.example</span> with fake values so teammates know what to set.
+                </div>
+            </div>
+        </div>
+
+        
         <div class="slide light">
             <div class="slide-content">
                 <h2>Troubleshooting</h2>
@@ -1158,7 +1209,7 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
         </div>
     </div>
 
-    <div class="slide-counter" id="slideCounter">1 / 28</div>
+    <div class="slide-counter" id="slideCounter">1 / 30</div>
     <div class="keyboard-hint"><kbd>←</kbd> <kbd>→</kbd> to navigate</div>
 
     <script>
