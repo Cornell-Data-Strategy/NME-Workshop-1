@@ -106,6 +106,26 @@
             color: var(--primary-blue);
         }
 
+        a {
+            color: #93c5fd;
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            text-underline-offset: 3px;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: #bfdbfe;
+        }
+
+        .slide.light a {
+            color: var(--primary-blue);
+        }
+
+        .slide.light a:hover {
+            color: var(--vivid-blue);
+        }
+
         .slide-content {
             max-width: 1200px;
             width: 100%;
@@ -140,16 +160,16 @@
         }
 
         p, li {
-            font-size: clamp(1rem, 1.5vw, 1.4rem);
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
             line-height: 1.8;
             color: rgba(255,255,255,0.9);
         }
 
         .subtitle {
-            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            font-size: clamp(1.4rem, 2.4vw, 2rem);
             color: rgba(255,255,255,0.8);
             font-weight: 300;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .slide.light .subtitle {
@@ -213,7 +233,7 @@
             max-width: 900px;
             margin: 2rem auto;
             border-collapse: collapse;
-            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            font-size: clamp(1.1rem, 1.6vw, 1.4rem);
         }
 
         th, td {
@@ -230,7 +250,7 @@
             background: rgba(255,255,255,0.1);
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85em;
+            font-size: 0.95em;
             letter-spacing: 0.1em;
         }
 
@@ -238,12 +258,118 @@
             background: rgba(255,255,255,0.05);
         }
 
+        .code-block-wrapper {
+            position: relative;
+            margin: 1.5rem auto;
+            max-width: 800px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
+            background: var(--primary-blue);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .copy-btn:hover {
+            background: var(--vivid-blue);
+            box-shadow: 0 4px 12px rgba(30, 83, 239, 0.4);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.97);
+        }
+
+        .copy-btn.copied {
+            background: #22c55e;
+            border-color: #16a34a;
+            color: white;
+        }
+
+        .slide.light .copy-btn {
+            background: var(--primary-blue);
+            border-color: var(--dark-blue);
+            color: white;
+        }
+
+        .slide.light .copy-btn:hover {
+            background: var(--vivid-blue);
+            color: white;
+        }
+
+        .slide.light .copy-btn.copied {
+            background: #22c55e;
+            border-color: #16a34a;
+            color: white;
+        }
+
+        .link-with-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .link-copy-btn {
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 6px;
+            background: var(--primary-blue);
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .link-copy-btn:hover {
+            background: var(--vivid-blue);
+            box-shadow: 0 2px 8px rgba(30, 83, 239, 0.3);
+        }
+
+        .link-copy-btn.copied {
+            background: #22c55e;
+            border-color: #16a34a;
+        }
+
+        .slide.light .link-copy-btn {
+            background: var(--primary-blue);
+            border-color: var(--dark-blue);
+            color: white;
+        }
+
+        .slide.light .link-copy-btn:hover {
+            background: var(--vivid-blue);
+            color: white;
+        }
+
+        .slide.light .link-copy-btn.copied {
+            background: #22c55e;
+            border-color: #16a34a;
+            color: white;
+        }
+
         pre {
             background: #0d1117;
             padding: 1.5rem 2rem;
             border-radius: 12px;
-            margin: 1.5rem auto;
-            max-width: 800px;
+            margin: 0;
             overflow-x: auto;
             text-align: left;
             border: 1px solid rgba(255,255,255,0.1);
@@ -273,7 +399,9 @@
             border-radius: 12px;
             padding: 2rem;
             margin: 2rem auto;
-            max-width: 700px;
+            max-width: 1200px;
+            font-size: 1.4rem;
+            line-height: 1.9;
         }
 
         .success-box {
@@ -392,6 +520,26 @@
             list-style: none;
         }
 
+        .habits-list {
+            max-width: 900px;
+            margin: 2rem auto 0 auto;
+        }
+
+        .habits-list li {
+            align-items: first baseline;
+        }
+
+        .habits-list li i {
+            width: 26px;
+            height: 26px;
+        }
+
+        .habit-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
         @media (max-width: 768px) {
             .slide {
                 padding: 40px 30px;
@@ -441,6 +589,10 @@
 
         .nav-zone:hover {
             background: rgba(255,255,255,0.02);
+        }
+
+        .git-commands-slide code {
+            color: #000000;
         }
     </style>
 </head>
@@ -542,7 +694,9 @@
                 <p class="subtitle">The "Parallel Universe" of Code</p>
                 <img src="/images/branches.png" alt="Git Branching Diagram" class="slide-image" style="max-width: 650px;">
                 <div class="" style="margin-top: 2rem;">
-                    <strong>Branching</strong> lets you diverge from the main project to work on new features or fixes in isolation. It's like having a sandbox where you can experiment without breaking the "real" version.
+                    <p style="font-size: 1.6rem; line-height: 1.9;">
+                        <strong>Branching</strong> lets you diverge from the main project to work on new features or fixes in isolation. It's like having a sandbox where you can experiment without breaking the "real" version.
+                    </p>
                 </div>
             </div>
         </div>
@@ -576,7 +730,7 @@
                 <h2>Create a GitHub Account</h2>
                 <p class="subtitle">If you don't already have one</p>
                 <ol>
-                    <li><i data-lucide="external-link"></i> Go to <strong>github.com</strong></li>
+                    <li><i data-lucide="external-link"></i> Go to <a href="https://github.com" target="_blank" rel="noopener noreferrer">github.com</a></li>
                     <li><i data-lucide="mouse-pointer-click"></i> Click <strong>"Sign Up"</strong></li>
                     <li><i data-lucide="mail"></i> Use your <strong>Cornell email</strong> (you get free perks!)</li>
                     <li><i data-lucide="user"></i> Choose a professional username (you'll use this forever)</li>
@@ -608,13 +762,14 @@
                         <h3><i data-lucide="apple"></i> macOS</h3>
                         <p>Open Terminal and run:</p>
                         <pre><code>xcode-select --install</code></pre>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">Follow the prompts to install</p>
+                        <p style="margin-top: 1rem; font-size: 1.1rem; color: rgba(255,255,255,0.8);">Follow the prompts to install</p>
                     </div>
                     <div class="col">
                         <h3><i data-lucide="monitor"></i> Windows</h3>
-                        <p>Download installer from:</p>
-                        <pre><code>git-scm.com/download/win</code></pre>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">Use all default options</p>
+                        <p>Download installer from:
+                            <a href="https://git-scm.com/download/win" target="_blank" rel="noopener noreferrer">git-scm.com/install/windows</a>
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 1.1rem; color: rgba(255,255,255,0.8);">Use all default options</p>
                     </div>
                 </div>
             </div>
@@ -651,8 +806,9 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
             <div class="slide-content">
                 <h2>Install GitHub CLI</h2>
                 <div style="text-align: center;">
-                    <p class="subtitle">Download the installer for your OS from:</p>
-                    <pre style="display: inline-block; margin: 1rem 0;"><code>cli.github.com</code></pre>
+                    <p class="subtitle">Download the installer for your OS from:
+                        <a href="https://cli.github.com" target="_blank" rel="noopener noreferrer">cli.github.com</a>
+                    </p>
                     <p style="margin-top: 2rem;">Run the installer and follow the prompts.</p>
                 </div>
             </div>
@@ -699,7 +855,34 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
                 <pre><code>code .</code></pre>
                 <div class="warning-box" style="margin-top: 2rem;">
                     <strong>Don't have VS Code?</strong><br>
-                    Download from <strong>code.visualstudio.com</strong> → Install → Restart terminal
+                    Download from <a href="https://code.visualstudio.com" target="_blank" rel="noopener noreferrer">code.visualstudio.com</a> → Install → Restart terminal
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Using Visual Git Tools</h2>
+                <p class="subtitle">See your changes, stage, commit, and sync using friendly UIs</p>
+                <div class="two-col" style="align-items: flex-start; margin-top: 2rem;">
+                    <div class="col" style="text-align: center;">
+                        <h3><i data-lucide="code-2"></i> VS Code Source Control</h3>
+                        <img src="/images/vscodegit.png" alt="VS Code Git Panel" class="slide-image">
+                        <p style="margin-top: 1rem; font-size: 1.1rem;">
+                            Use the Source Control view in VS Code to quickly see changed files, review diffs, and commit without leaving your editor.
+                        </p>
+                    </div>
+                    <div class="col" style="text-align: center;">
+                        <h3><i data-lucide="github"></i> GitHub Desktop</h3>
+                        <img src="/images/githubdesktop.png" alt="GitHub Desktop" class="slide-image" style="max-width: 510px;">
+                        <p style="margin-top: 1rem; font-size: 1.1rem;">
+                            GitHub Desktop gives you a simple app to stage changes, write commit messages, and push or pull from GitHub with buttons.
+                        </p>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Together:</strong> these tools give you a clear, visual way to use Git without memorizing every command.
                 </div>
             </div>
         </div>
@@ -759,7 +942,7 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
         </div>
 
         
-        <div class="slide light">
+        <div class="slide light git-commands-slide">
             <div class="slide-content">
                 <h2>Quick Reference - Git Commands</h2>
                 <table>
@@ -809,6 +992,58 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
         
         <div class="slide light">
             <div class="slide-content">
+                <h2>Good Git Habits</h2>
+                <p class="subtitle">Things that will make your future self (and teammates) happy</p>
+                <ul class="check-list habits-list">
+                    <li>
+                        <i data-lucide="clock-3"></i>
+                        <div class="habit-text">
+                            <strong>Commit early and often</strong>
+                            <span>Small commits are easier to understand, review, and undo.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="goal"></i>
+                        <div class="habit-text">
+                            <strong>One purpose per commit</strong>
+                            <span>Don't mix "fix bug" with "refactor everything" in the same commit.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="quote"></i>
+                        <div class="habit-text">
+                            <strong>Write clear messages</strong>
+                            <span>Use short, action-style messages like <span class="inline-code">Add validation for signup form</span>.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="download-cloud"></i>
+                        <div class="habit-text">
+                            <strong>Pull before you start</strong>
+                            <span>Run <span class="inline-code">git pull</span> at the beginning of a work session to avoid surprises.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="key-round"></i>
+                        <div class="habit-text">
+                            <strong>Don't commit secrets</strong>
+                            <span>API keys, passwords, and private data should never be in Git.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <i data-lucide="beaker"></i>
+                        <div class="habit-text">
+                            <strong>Commit working code</strong>
+                            <span>Avoid pushing broken <span class="inline-code">main</span>; use branches when you're experimenting.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
                 <h2>Troubleshooting</h2>
                 <div style="text-align: left; max-width: 800px; margin: 0 auto;">
                     <h3><i data-lucide="shield-x"></i> "Permission denied"</h3>
@@ -844,10 +1079,36 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
             <div class="slide-content">
                 <h2>Resources</h2>
                 <ul>
-                    <li><i data-lucide="file-text"></i> <strong>Git Cheat Sheet</strong> - education.github.com/git-cheat-sheet-education.pdf</li>
-                    <li><i data-lucide="gamepad-2"></i> <strong>Learn Git Branching</strong> - learngitbranching.js.org (Interactive game!)</li>
-                    <li><i data-lucide="book-open"></i> <strong>GitHub Docs</strong> - docs.github.com</li>
-                    <li><i data-lucide="graduation-cap"></i> <strong>GitHub Education</strong> - education.github.com (Free perks for students!)</li>
+                    <li>
+                        <i data-lucide="file-text"></i>
+                        <strong>Git Cheat Sheet</strong> -
+                        <a href="https://education.github.com/git-cheat-sheet-education.pdf" target="_blank" rel="noopener noreferrer">
+                            education.github.com/git-cheat-sheet-education.pdf
+                        </a>
+                    </li>
+                    <li>
+                        <i data-lucide="gamepad-2"></i>
+                        <strong>Learn Git Branching</strong> -
+                        <a href="https://learngitbranching.js.org" target="_blank" rel="noopener noreferrer">
+                            learngitbranching.js.org
+                        </a>
+                        (Interactive game!)
+                    </li>
+                    <li>
+                        <i data-lucide="book-open"></i>
+                        <strong>GitHub Docs</strong> -
+                        <a href="https://docs.github.com" target="_blank" rel="noopener noreferrer">
+                            docs.github.com
+                        </a>
+                    </li>
+                    <li>
+                        <i data-lucide="graduation-cap"></i>
+                        <strong>GitHub Education</strong> -
+                        <a href="https://education.github.com" target="_blank" rel="noopener noreferrer">
+                            education.github.com
+                        </a>
+                        (Free perks for students!)
+                    </li>
                 </ul>
             </div>
         </div>
@@ -878,6 +1139,11 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
                 <div class="highlight-box" style="margin-top: 3rem;">
                     <p style="font-size: 1.3rem;">GitHub Organization:</p>
                     <p style="font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;">Cornell-Data-Strategy</p>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <p style="font-size: 1.1rem;">
+                        You can also reach out to <strong>Ahmed</strong> or <strong>Arsh</strong> with any questions!
+                    </p>
                 </div>
                 <p style="margin-top: 3rem;">Thank you for attending!</p>
                 <p style="font-weight: 600;">Cornell Data Strategy | NME Workshop Series</p>
@@ -973,6 +1239,70 @@ git config --global user.email "your.email@cornell.edu"</code></pre>
             }
         }
 
+        function addCopyButtons() {
+            document.querySelectorAll('.slide pre').forEach(pre => {
+                if (pre.closest('.code-block-wrapper')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
+
+                const preStyle = window.getComputedStyle(pre);
+                if (preStyle.display === 'inline-block') {
+                    wrapper.style.display = 'inline-block';
+                }
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'copy-btn';
+                btn.setAttribute('aria-label', 'Copy to clipboard');
+                btn.innerHTML = '<i data-lucide="copy" style="width:14px;height:14px;"></i> Copy';
+                btn.addEventListener('click', () => {
+                    const text = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+                    navigator.clipboard.writeText(text).then(() => {
+                        btn.classList.add('copied');
+                        btn.innerHTML = '<i data-lucide="check" style="width:14px;height:14px;"></i> Copied!';
+                        lucide.createIcons();
+                        setTimeout(() => {
+                            btn.classList.remove('copied');
+                            btn.innerHTML = '<i data-lucide="copy" style="width:14px;height:14px;"></i> Copy';
+                            lucide.createIcons();
+                        }, 2000);
+                    });
+                });
+                wrapper.appendChild(btn);
+            });
+
+            document.querySelectorAll('.slide a[href]').forEach(a => {
+                if (a.querySelector('.link-copy-btn')) return;
+                const span = document.createElement('span');
+                span.className = 'link-with-copy';
+                a.parentNode.insertBefore(span, a);
+                span.appendChild(a);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'link-copy-btn';
+                btn.setAttribute('aria-label', 'Copy link');
+                btn.innerHTML = '<i data-lucide="copy" style="width:12px;height:12px;"></i>';
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = a.getAttribute('href') || '';
+                    navigator.clipboard.writeText(url).then(() => {
+                        btn.classList.add('copied');
+                        btn.innerHTML = '<i data-lucide="check" style="width:12px;height:12px;"></i>';
+                        lucide.createIcons();
+                        setTimeout(() => {
+                            btn.classList.remove('copied');
+                            btn.innerHTML = '<i data-lucide="copy" style="width:12px;height:12px;"></i>';
+                            lucide.createIcons();
+                        }, 2000);
+                    });
+                });
+                span.appendChild(btn);
+            });
+        }
+
+        addCopyButtons();
         updateSlide();
     </script>
 </body>
