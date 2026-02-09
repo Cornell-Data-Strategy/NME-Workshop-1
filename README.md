@@ -18,6 +18,7 @@ See the [slides.md](./slides.md) file for step-by-step instructions.
 ## 👥 Contributors
 
 _Add your name below to complete the workshop!_
+Aashna Thadani
 
 - [Eric Shen](https://github.com/erics118)
 - [Adi Prathapa](https://github.com/adiprathapa)
