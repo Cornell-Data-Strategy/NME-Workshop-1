@@ -21,6 +21,7 @@ _Add your name below to complete the workshop!_
 
 - [Eric Shen](https://github.com/erics118)
 - [Adi Prathapa](https://github.com/adiprathapa)
+- [Saiakhil Chilaka](https://github.com/sc3484)
 
 <!-- Add your name using the format below -->
 <!-- - [Your Name](https://github.com/your-username) -->
