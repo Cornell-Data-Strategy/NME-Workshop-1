@@ -9,7 +9,7 @@ Welcome to the **Cornell Data Strategy** Introduction to Git, GitHub & IDE Works
 - Basic Git commands (clone, add, commit, push)
 - How to collaborate on a shared repository
 
-##  Getting Started
+## Getting Started
 
 See the [slides.md](./slides.md) file for step-by-step instructions.
 
@@ -21,12 +21,14 @@ _Add your name below to complete the workshop!_
 Aashna Thadani
 
 - [Eric Shen](https://github.com/erics118)
+- [Daniel Khanin](https://github.com/Danikk392)
 - [Ivy Liu](https://github.com/il328)
 - [Adi Prathapa](https://github.com/adiprathapa)
 - [Saiakhil Chilaka](https://github.com/sc3484)
 - [Mihir Steingard](https://github.com/mihirstein)
 
 <!-- Add your name using the format below -->
+
 <!-- - [Your Name](https://github.com/your-username) -->
 
 - [Urja Saha](https://github.com/sahaurja)
