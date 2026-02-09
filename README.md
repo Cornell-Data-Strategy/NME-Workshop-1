@@ -21,6 +21,7 @@ _Add your name below to complete the workshop!_
 Aashna Thadani
 
 - [Eric Shen](https://github.com/erics118)
+- [Ivy Liu](https://github.com/il328)
 - [Adi Prathapa](https://github.com/adiprathapa)
 - [Saiakhil Chilaka](https://github.com/sc3484)
 
