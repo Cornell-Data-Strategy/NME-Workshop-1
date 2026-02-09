@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Git, GitHub & IDE | Cornell Data Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-blue: #1E53EF;
+            --dark-blue: #051C2C;
+            --vivid-blue: #155cfc;
+            --light-blue: #E4F2FF;
+            --text-dark: #252526;
+            --hero-gradient: linear-gradient(220deg, #0B1F6B 0%, #1942CB 40%, #102583 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-blue);
+            color: white;
+            overflow: hidden;
+        }
+
+        .slides-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 100px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .slide.dark {
+            background: var(--hero-gradient);
+            color: white;
+        }
+
+        .slide.light {
+            background: #FFFFFF;
+            color: var(--text-dark);
+        }
+
+        .slide.light h2, .slide.light h3 {
+            color: var(--dark-blue);
+        }
+
+        .slide.light p, .slide.light li {
+            color: var(--text-dark);
+        }
+
+        .slide.light .highlight-box {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .slide.light .success-box {
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .slide.light .warning-box {
+            background: rgba(234, 179, 8, 0.1);
+        }
+
+        .slide.light pre {
+            background: #1e1e1e;
+        }
+
+        .slide.light table th {
+            background: var(--light-blue);
+            color: var(--dark-blue);
+        }
+
+        .slide.light table tr:hover {
+            background: var(--light-blue);
+        }
+
+        .slide.light .workflow-step {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .slide.light .workflow-step .step-cmd {
+            color: var(--primary-blue);
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Domine', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-family: 'Domine', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-family: 'Domine', serif;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--light-blue);
+        }
+
+        .slide.light h3 {
+            color: var(--primary-blue);
+        }
+
+        p, li {
+            font-size: clamp(1rem, 1.5vw, 1.4rem);
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            color: rgba(255,255,255,0.8);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .slide.light .subtitle {
+            color: #6B7280;
+        }
+
+        /* Images */
+        .slide-image {
+            max-width: 80%;
+            max-height: 50vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 1.5rem 0;
+        }
+
+        .slide-image-small {
+            max-width: 60%;
+            max-height: 40vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 1.5rem 0;
+        }
+
+        ul, ol {
+            text-align: left;
+            display: inline-block;
+            margin: 1.5rem 0;
+        }
+
+        li {
+            margin: 0.8rem 0;
+            padding-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        li i {
+            flex-shrink: 0;
+        }
+
+        blockquote {
+            font-style: italic;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1rem 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 0 8px 8px 0;
+        }
+
+        blockquote footer {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: 2rem auto;
+            border-collapse: collapse;
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+        }
+
+        th, td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slide.light th, .slide.light td {
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: rgba(255,255,255,0.1);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 0.1em;
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        pre {
+            background: #0d1117;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin: 1.5rem auto;
+            max-width: 800px;
+            overflow-x: auto;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        code {
+            font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
+            color: #e6edf3;
+        }
+
+        .inline-code {
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .slide.light .inline-code {
+            background: var(--light-blue);
+            color: var(--dark-blue);
+        }
+
+        .highlight-box {
+            background: rgba(30, 83, 239, 0.2);
+            border: 2px solid var(--primary-blue);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 700px;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid #22c55e;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+        }
+
+        .warning-box {
+            background: rgba(234, 179, 8, 0.15);
+            border: 2px solid #eab308;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        .col h3 {
+            margin-bottom: 1rem;
+        }
+
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+        }
+
+        body:has(.slide.light.active) .slide-counter {
+            color: rgba(0,0,0,0.4);
+        }
+
+        .keyboard-hint {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        body:has(.slide.light.active) .keyboard-hint {
+            color: rgba(0,0,0,0.4);
+        }
+
+        kbd {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+            margin: 0 2px;
+        }
+
+        body:has(.slide.light.active) kbd {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .workflow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .workflow-step {
+            background: rgba(255,255,255,0.1);
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 140px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .workflow-step .step-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .workflow-step .step-cmd {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--light-blue);
+            margin-top: 0.5rem;
+        }
+
+        .workflow-arrow {
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
+
+        .check-list {
+            list-style: none;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .keyboard-hint {
+                display: none;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide.active .slide-content {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .nav-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            width: 15%;
+            z-index: 50;
+            cursor: pointer;
+        }
+
+        .nav-zone.left {
+            left: 0;
+        }
+
+        .nav-zone.right {
+            right: 0;
+        }
+
+        .nav-zone:hover {
+            background: rgba(255,255,255,0.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress" id="progress"></div>
+
+    <div class="nav-zone left" onclick="prevSlide()"></div>
+    <div class="nav-zone right" onclick="nextSlide()"></div>
+
+    <div class="slides-container" id="slidesContainer">
+        
+        <div class="slide dark active">
+            <div class="slide-content">
+                <p class="subtitle">Cornell Data Strategy Workshop</p>
+                <h1>Introduction to Git, GitHub & IDE</h1>
+                
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Why Are We Here?</h2>
+                <p class="subtitle">You're about to learn the <strong>#1 most important skill</strong> in modern tech...</p>
+                <img src="/images/ahmedcs1110.png" alt="Version Control System" style="max-width: 800px; margin-top: 2rem; border-radius: 8px;">
+            </div>
+        </div>
+
+        
+
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>What is Version Control?</h2>
+                <p class="subtitle">Think of it like <strong>Google Docs history</strong>, but for code</p>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem; margin-top: 2rem;">
+                    <img src="/images/versioncontrolsys.png" alt="Version Control System Diagram" style="max-width: 500px; border-radius: 8px;">
+                    <ul style="text-align: left; list-style: none; margin: 0; display: inline-block;">
+                        <li style="margin-bottom: 0.5rem;"><i data-lucide="scroll-text"></i> <strong>Track every change</strong> ever made</li>
+                        <li style="margin-bottom: 0.5rem;"><i data-lucide="undo-2"></i> <strong>Go back in time</strong> if something breaks</li>
+                        <li style="margin-bottom: 0.5rem;"><i data-lucide="users"></i> <strong>Collaborate</strong> without overwriting each other's work</li>
+                        <li style="margin-bottom: 0.5rem;"><i data-lucide="git-branch"></i> <strong>Work in parallel</strong> on different features</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Why Should YOU Care?</h2>
+                <p class="subtitle">Even if you're <strong>not 100% technical</strong>...</p>
+                <table>
+                    <tr><th>Role</th><th>Why Git Matters</th></tr>
+                    <tr><td><i data-lucide="bar-chart-3"></i> Data Analyst</td><td>Track changes to scripts, share notebooks</td></tr>
+                    <tr><td><i data-lucide="trending-up"></i> Business Analyst</td><td>Version control documentation, collaborate on reports</td></tr>
+                    <tr><td><i data-lucide="palette"></i> Designer</td><td>Track design iterations, collaborate with devs</td></tr>
+                    <tr><td><i data-lucide="clipboard-list"></i> Project Manager</td><td>Understand team workflows, review changes</td></tr>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>The Industry Standard</h2>
+                <p class="subtitle"><strong>Every tech company uses Git</strong></p>
+                <table>
+                    <tr><th>Company</th><th>Uses Git?</th></tr>
+                    <tr><td>Google</td><td><i data-lucide="check"></i></td></tr>
+                    <tr><td>Meta</td><td><i data-lucide="check"></i></td></tr>
+                    <tr><td>Apple</td><td><i data-lucide="check"></i></td></tr>
+                    <tr><td>Amazon</td><td><i data-lucide="check"></i></td></tr>
+                    <tr><td>Microsoft</td><td><i data-lucide="check"></i> (they own GitHub!)</td></tr>
+                    <tr><td>Every Startup</td><td><i data-lucide="check"></i><i data-lucide="check"></i><i data-lucide="check"></i></td></tr>
+                </table>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>If you want to work in tech, you NEED this skill.</strong>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Git vs GitHub</h2>
+                <p class="subtitle">What's the difference?</p>
+                <img src="/images/gitvsgithub.png" alt="Git vs GitHub comparison" class="slide-image">
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Git</strong> = The engine &nbsp;|&nbsp; <strong>GitHub</strong> = The garage where everyone parks their cars
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Git Branching</h2>
+                <p class="subtitle">The "Parallel Universe" of Code</p>
+                <img src="/images/branches.png" alt="Git Branching Diagram" class="slide-image" style="max-width: 650px;">
+                <div class="" style="margin-top: 2rem;">
+                    <strong>Branching</strong> lets you diverge from the main project to work on new features or fixes in isolation. It's like having a sandbox where you can experiment without breaking the "real" version.
+                </div>
+            </div>
+        </div>
+```
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Today's Workshop</h2>
+                <p class="subtitle">By the end of this workshop, you will:</p>
+                <ul class="check-list">
+                    <li><i data-lucide="check-circle"></i> Have Git installed on your computer</li>
+                    <li><i data-lucide="check-circle"></i> Be added as a collaborator to our organization</li>
+                    <li><i data-lucide="check-circle"></i> Clone this repository</li>
+                    <li><i data-lucide="check-circle"></i> Add your name to the README</li>
+                    <li><i data-lucide="check-circle"></i> Push your first commit!</li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h1>Let's Get Started!</h1>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Create a GitHub Account</h2>
+                <p class="subtitle">If you don't already have one</p>
+                <ol>
+                    <li><i data-lucide="external-link"></i> Go to <strong>github.com</strong></li>
+                    <li><i data-lucide="mouse-pointer-click"></i> Click <strong>"Sign Up"</strong></li>
+                    <li><i data-lucide="mail"></i> Use your <strong>Cornell email</strong> (you get free perks!)</li>
+                    <li><i data-lucide="user"></i> Choose a professional username (you'll use this forever)</li>
+                </ol>
+                <div class="warning-box" style="margin-top: 2rem;">
+                    <strong>Pro tip:</strong> Your GitHub profile is like a portfolio. Employers WILL look at it.
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Join Our Organization</h2>
+                <p class="subtitle"><strong>Send your user in slack to general</strong> to be added as a collaborator</p>
+                <p style="margin-top: 2rem;">Once invited, you'll receive an email or notification.</p>
+                <div class="success-box">
+                    <i data-lucide="check-circle"></i> Accept the invitation to join <strong>Cornell-Data-Strategy</strong>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Install Git</h2>
+                <div class="two-col" style="text-align: center;">
+                    <div class="col">
+                        <h3><i data-lucide="apple"></i> macOS</h3>
+                        <p>Open Terminal and run:</p>
+                        <pre><code>xcode-select --install</code></pre>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">Follow the prompts to install</p>
+                    </div>
+                    <div class="col">
+                        <h3><i data-lucide="monitor"></i> Windows</h3>
+                        <p>Download installer from:</p>
+                        <pre><code>git-scm.com/download/win</code></pre>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.6);">Use all default options</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Verify Git Installation</h2>
+                <p class="subtitle">Open your terminal and run:</p>
+                <pre><code>git --version</code></pre>
+                <p style="margin-top: 1.5rem;">You should see something like:</p>
+                <pre><code>git version 2.42.0</code></pre>
+                <div class="success-box" style="margin-top: 2rem;">
+                    <i data-lucide="check-circle"></i> If you see a version number, you're good!
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Configure Git</h2>
+                <p class="subtitle">Tell Git who you are:</p>
+                <pre><code>git config --global user.name "Your Name"
+git config --global user.email "your.email@cornell.edu"</code></pre>
+                <p style="margin-top: 1.5rem;">Verify your config:</p>
+                <pre><code>git config --list</code></pre>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Install GitHub CLI</h2>
+                <div style="text-align: center;">
+                    <p class="subtitle">Download the installer for your OS from:</p>
+                    <pre style="display: inline-block; margin: 1rem 0;"><code>cli.github.com</code></pre>
+                    <p style="margin-top: 2rem;">Run the installer and follow the prompts.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Login to GitHub</h2>
+                <p class="subtitle">Run this command:</p>
+                <pre><code>gh auth login</code></pre>
+                <ol style="margin-top: 2rem;">
+                    <li><i data-lucide="globe"></i> Select <strong>GitHub.com</strong></li>
+                    <li><i data-lucide="lock"></i> Select <strong>HTTPS</strong></li>
+                    <li><i data-lucide="chrome"></i> Select <strong>Login with a web browser</strong></li>
+                    <li><i data-lucide="copy"></i> Copy the one-time code</li>
+                    <li><i data-lucide="corner-down-left"></i> Press Enter to open GitHub in browser</li>
+                    <li><i data-lucide="clipboard-paste"></i> Paste the code and authorize</li>
+                </ol>
+                <div class="success-box" style="margin-top: 1.5rem;">
+                    <i data-lucide="check-circle"></i> You're now authenticated!
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Clone the Repository</h2>
+                <p class="subtitle">Navigate to where you want to store the project:</p>
+                <pre><code>cd ~/Desktop</code></pre>
+                <p style="margin-top: 1.5rem;">Clone the repo:</p>
+                <pre><code>git clone https://github.com/Cornell-Data-Strategy/NME-Workshop-1.git</code></pre>
+                <p style="margin-top: 1.5rem;">Enter the project folder:</p>
+                <pre><code>cd NME-Workshop-1</code></pre>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Open in Your IDE</h2>
+                <h3>VS Code (Recommended)</h3>
+                <p>If you have VS Code installed:</p>
+                <pre><code>code .</code></pre>
+                <div class="warning-box" style="margin-top: 2rem;">
+                    <strong>Don't have VS Code?</strong><br>
+                    Download from <strong>code.visualstudio.com</strong> → Install → Restart terminal
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Add Your Name!</h2>
+                <p class="subtitle">Open <code class="inline-code">README.md</code> and add your name:</p>
+                <pre><code># NME-Workshop-1
+
+## Contributors
+- [Your Name](https://github.com/your-username)</code></pre>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Save the file!</strong> (Cmd+S on Mac, Ctrl+S on Windows)
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Stage Your Changes</h2>
+                <p class="subtitle">See what files changed:</p>
+                <pre><code>git status</code></pre>
+                <p style="margin-top: 1rem;">You should see <code class="inline-code">README.md</code> in <span style="color: #f87171;">red</span> (modified but not staged).</p>
+                <p style="margin-top: 1.5rem;">Add it to staging:</p>
+                <pre><code>git add README.md</code></pre>
+                <p style="margin-top: 1rem;">Now <code class="inline-code">git status</code> shows it in <span style="color: #4ade80;">green</span>!</p>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Commit Your Changes</h2>
+                <p class="subtitle">Create a commit with a message:</p>
+                <pre><code>git commit -m "Add [Your Name] to contributors"</code></pre>
+                <p style="margin-top: 1.5rem;">Replace <code class="inline-code">[Your Name]</code> with your actual name!</p>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Commit messages</strong> should be short and describe WHAT you changed.
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>Push to GitHub!</h2>
+                <p class="subtitle">Send your changes to GitHub:</p>
+                <pre><code>git push</code></pre>
+                <div class="success-box" style="margin-top: 2rem;">
+                    <strong>That's it!</strong> Your changes are now on GitHub!
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 1.3rem;">Go to the repo on GitHub and refresh to see your name!</p>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Quick Reference - Git Commands</h2>
+                <table>
+                    <tr><th>Command</th><th>What it does</th></tr>
+                    <tr><td><code>git clone &lt;url&gt;</code></td><td>Download a repository</td></tr>
+                    <tr><td><code>git status</code></td><td>See what's changed</td></tr>
+                    <tr><td><code>git add &lt;file&gt;</code></td><td>Stage changes for commit</td></tr>
+                    <tr><td><code>git add .</code></td><td>Stage ALL changes</td></tr>
+                    <tr><td><code>git commit -m "msg"</code></td><td>Save staged changes</td></tr>
+                    <tr><td><code>git push</code></td><td>Upload commits to GitHub</td></tr>
+                    <tr><td><code>git pull</code></td><td>Download latest changes</td></tr>
+                </table>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>The Git Workflow</h2>
+                <div class="workflow">
+                    <div class="workflow-step">
+                        <div class="step-name">Edit File</div>
+                        <div class="step-cmd">Make changes</div>
+                    </div>
+                    <div class="workflow-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="workflow-step">
+                        <div class="step-name">Stage</div>
+                        <div class="step-cmd">git add</div>
+                    </div>
+                    <div class="workflow-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="workflow-step">
+                        <div class="step-name">Commit</div>
+                        <div class="step-cmd">git commit</div>
+                    </div>
+                    <div class="workflow-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="workflow-step">
+                        <div class="step-name">Push</div>
+                        <div class="step-cmd">git push</div>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Remember:</strong> Edit → Stage → Commit → Push
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Troubleshooting</h2>
+                <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+                    <h3><i data-lucide="shield-x"></i> "Permission denied"</h3>
+                    <pre><code>gh auth login</code></pre>
+                    <p style="margin-bottom: 2rem;">Re-authenticate with GitHub.</p>
+
+                    <h3><i data-lucide="x-circle"></i> "Failed to push - rejected"</h3>
+                    <pre><code>git pull</code></pre>
+                    <p style="margin-bottom: 2rem;">Then try <code class="inline-code">git push</code> again.</p>
+
+                    <h3><i data-lucide="terminal"></i> "Command not found: git"</h3>
+                    <p>Reinstall Git and restart your terminal.</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h2>What's Next?</h2>
+                <p class="subtitle">Now that you know the basics:</p>
+                <img src="/images/branches.png" alt="Git Branches" class="slide-image-small">
+                <ul style="margin-top: 1.5rem;">
+                    <li><i data-lucide="git-branch"></i> <strong>Branches</strong> - Work on features without breaking main code</li>
+                    <li><i data-lucide="git-pull-request"></i> <strong>Pull Requests</strong> - Propose and review changes</li>
+                    <li><i data-lucide="git-merge"></i> <strong>Merge Conflicts</strong> - Handle when two people edit the same line</li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h2>Resources</h2>
+                <ul>
+                    <li><i data-lucide="file-text"></i> <strong>Git Cheat Sheet</strong> - education.github.com/git-cheat-sheet-education.pdf</li>
+                    <li><i data-lucide="gamepad-2"></i> <strong>Learn Git Branching</strong> - learngitbranching.js.org (Interactive game!)</li>
+                    <li><i data-lucide="book-open"></i> <strong>GitHub Docs</strong> - docs.github.com</li>
+                    <li><i data-lucide="graduation-cap"></i> <strong>GitHub Education</strong> - education.github.com (Free perks for students!)</li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="slide dark">
+            <div class="slide-content">
+                <h1>Congratulations!</h1>
+                <p class="subtitle" style="margin-top: 2rem;">You just:</p>
+                <ul class="check-list">
+                    <li><i data-lucide="check-circle"></i> Installed Git</li>
+                    <li><i data-lucide="check-circle"></i> Authenticated with GitHub</li>
+                    <li><i data-lucide="check-circle"></i> Cloned a repository</li>
+                    <li><i data-lucide="check-circle"></i> Made changes and committed them</li>
+                    <li><i data-lucide="check-circle"></i> Pushed your first contribution!</li>
+                </ul>
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <strong>Welcome to the world of version control!</strong>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="slide light">
+            <div class="slide-content">
+                <h1>Questions?</h1>
+                <p class="subtitle" style="margin-top: 2rem;">Ask now or reach out to us!</p>
+                <div class="highlight-box" style="margin-top: 3rem;">
+                    <p style="font-size: 1.3rem;">GitHub Organization:</p>
+                    <p style="font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;">Cornell-Data-Strategy</p>
+                </div>
+                <p style="margin-top: 3rem;">Thank you for attending!</p>
+                <p style="font-weight: 600;">Cornell Data Strategy | NME Workshop Series</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter" id="slideCounter">1 / 28</div>
+    <div class="keyboard-hint"><kbd>←</kbd> <kbd>→</kbd> to navigate</div>
+
+    <script>
+        lucide.createIcons();
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progress = document.getElementById('progress');
+        const slideCounter = document.getElementById('slideCounter');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            const progressWidth = ((currentSlide + 1) / totalSlides) * 100;
+            progress.style.width = progressWidth + '%';
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            lucide.createIcons();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                goToSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                goToSlide(totalSlides - 1);
+            }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        updateSlide();
+    </script>
+</body>
+</html>
