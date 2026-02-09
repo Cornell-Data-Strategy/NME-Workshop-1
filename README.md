@@ -24,6 +24,7 @@ Aashna Thadani
 - [Ivy Liu](https://github.com/il328)
 - [Adi Prathapa](https://github.com/adiprathapa)
 - [Saiakhil Chilaka](https://github.com/sc3484)
+- [Mihir Steingard](https://github.com/mihirstein)
 
 <!-- Add your name using the format below -->
 <!-- - [Your Name](https://github.com/your-username) -->
