@@ -20,6 +20,7 @@ See the [slides.md](./slides.md) file for step-by-step instructions.
 _Add your name below to complete the workshop!_
 
 - [Eric Shen](https://github.com/erics118)
+- [Adi Prathapa](https://github.com/adiprathapa)
 
 <!-- Add your name using the format below -->
 <!-- - [Your Name](https://github.com/your-username) -->
